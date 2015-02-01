@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StateRotator : MonoBehaviour
+public class StageRotator : MonoBehaviour
 {
     public GameObject stage = null;
     public float maxHorizontalAngle = 0.0f;
@@ -18,7 +18,10 @@ public class StateRotator : MonoBehaviour
             // Desactive
             this.enabled = false;
         }
-        defaultStageDirection = stage.transform.rotation;
+        else
+        {
+            defaultStageDirection = stage.transform.rotation;
+        }
     }
 
     void Update()
@@ -30,7 +33,7 @@ public class StateRotator : MonoBehaviour
         float HorAngle = maxHorizontalAngle * x;
         float vertAngle = maxVerticalAngle * y;
 
-        Quaternion toAdd = Quaternion.Euler(new Vector3(vertAngle, 0, HorAngle));
+        Quaternion toAdd = Quaternion.Euler(new Vector3(vertAngle, 0, -HorAngle));
 
         stage.transform.rotation = defaultStageDirection * toAdd;
     }
