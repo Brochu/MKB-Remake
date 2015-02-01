@@ -4,6 +4,7 @@ using System.Collections;
 public class CamRotator : MonoBehaviour
 {
     public Camera cam;
+    public float maxHorizontalAngle;
     public float maxVerticalAngle;
 
     private Quaternion defaultCamDirection;
@@ -25,10 +26,13 @@ public class CamRotator : MonoBehaviour
     void Update()
     {
         // Calcul de l'angle vertical
+        float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
-        float angle = maxVerticalAngle * y;
 
-        Quaternion toAdd = Quaternion.Euler(new Vector3(angle, 0, 0));
+        float HorAngle = maxHorizontalAngle * x;
+        float vertAngle = maxVerticalAngle * y;
+
+        Quaternion toAdd = Quaternion.Euler(new Vector3(vertAngle, 0, HorAngle));
 
         cam.transform.rotation = defaultCamDirection * toAdd;
         // cam.transform.position = defaultCamPosition + new Vector3(0, 0, angle);

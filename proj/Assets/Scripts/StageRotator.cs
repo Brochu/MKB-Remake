@@ -1,19 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StageRotator : MonoBehaviour {
+public class StateRotator : MonoBehaviour
+{
+    public GameObject stage = null;
+    public float maxHorizontalAngle = 0.0f;
+    public float maxVerticalAngle = 0.0f;
 
-    // Use this for initialization
-    void Start () {
-        Debug.Log("Stage Rotator script started.");
+    private Quaternion defaultStageDirection;
+
+    void Start()
+    {
+        if (!stage)
+        {
+            Debug.Log("StageRotator: Il manque un objet de type camera. Stopping script");
+
+            // Desactive
+            this.enabled = false;
+        }
+        defaultStageDirection = stage.transform.rotation;
     }
-    
-    // Update is called once per frame
-    void Update () {
+
+    void Update()
+    {
+        // Calcul de l'angle vertical
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
-        string asdf = string.Format("x: {0}; \ny: {1}", x, y);
 
-        Debug.Log(asdf);
+        float HorAngle = maxHorizontalAngle * x;
+        float vertAngle = maxVerticalAngle * y;
+
+        Quaternion toAdd = Quaternion.Euler(new Vector3(vertAngle, 0, HorAngle));
+
+        stage.transform.rotation = defaultStageDirection * toAdd;
     }
 }
