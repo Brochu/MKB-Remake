@@ -3,20 +3,38 @@ using System.Collections;
 
 public class CamRotator : MonoBehaviour
 {
+    public Camera cam;
+    public float maxVerticalAngle;
 
-    // Use this for initialization
+    private Quaternion defaultCamDirection;
+    // private Vector3 defaultCamPosition;
+
     void Start()
     {
-        Debug.Log("Stage Rotator script started.");
+        if (!cam)
+        {
+            Debug.Log("CameraRotator: Il manque un objet de type camera. Stopping script");
+
+            // Desactive
+            this.enabled = false;
+        }
+        defaultCamDirection = cam.transform.rotation;
+        // defaultCamPosition = cam.transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
+        // Calcul de l'angle vertical
         float y = Input.GetAxis("Vertical");
-        string asdf = string.Format("x: {0}; \ny: {1}", x, y);
+        float angle = maxVerticalAngle * y;
 
-        Debug.Log(asdf);
+        Quaternion toAdd = Quaternion.Euler(new Vector3(angle, 0, 0));
+
+        cam.transform.rotation = defaultCamDirection * toAdd;
+        // cam.transform.position = defaultCamPosition + new Vector3(0, 0, angle);
     }
+
+    //void LateUpdate()
+    //{
+    //}
 }
