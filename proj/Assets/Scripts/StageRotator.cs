@@ -11,6 +11,7 @@ public class StageRotator : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("StageRotator script: Starting !");
         if (!stage)
         {
             Debug.Log("StageRotator: Il manque un objet de type camera. Stopping script");
