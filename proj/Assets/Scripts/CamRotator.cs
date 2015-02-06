@@ -8,7 +8,6 @@ public class CamRotator : MonoBehaviour
     public float maxVerticalAngle;
 
     private Quaternion defaultCamDirection;
-    // private Vector3 defaultCamPosition;
 
     void Start()
     {
@@ -20,7 +19,6 @@ public class CamRotator : MonoBehaviour
             this.enabled = false;
         }
         defaultCamDirection = cam.transform.rotation;
-        // defaultCamPosition = cam.transform.position;
     }
 
     void Update()
@@ -30,15 +28,10 @@ public class CamRotator : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         float HorAngle = maxHorizontalAngle * x;
-        float vertAngle = maxVerticalAngle * y;
+        float vertAngle = (maxVerticalAngle * y) * -1; // The result is way better with this inversed
 
         Quaternion toAdd = Quaternion.Euler(new Vector3(vertAngle, 0, HorAngle));
 
         cam.transform.rotation = defaultCamDirection * toAdd;
-        // cam.transform.position = defaultCamPosition + new Vector3(0, 0, angle);
     }
-
-    //void LateUpdate()
-    //{
-    //}
 }
