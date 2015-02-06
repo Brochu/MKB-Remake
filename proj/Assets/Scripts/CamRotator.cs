@@ -3,11 +3,16 @@ using System.Collections;
 
 public class CamRotator : MonoBehaviour
 {
-    public Camera cam;
-    public float maxHorizontalAngle;
-    public float maxVerticalAngle;
+    public Camera cam = null;
+    public GameObject player = null;
 
-    private Quaternion defaultCamDirection;
+    public float maxHorizontalAngle = 10.0f;
+    public float defaultHAngle = 0.0f;
+
+    public float maxVerticalAngle = 10.0f;
+    public float defaultVAngle = 5.0f;
+
+    private float distWithPlayer = 0.0f;
 
     void Start()
     {
@@ -18,7 +23,8 @@ public class CamRotator : MonoBehaviour
             // Desactive
             this.enabled = false;
         }
-        defaultCamDirection = cam.transform.rotation;
+
+        distWithPlayer = (player.transform.position - cam.transform.position).magnitude;
     }
 
     void Update()
@@ -27,11 +33,22 @@ public class CamRotator : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
-        float HorAngle = maxHorizontalAngle * x;
-        float vertAngle = (maxVerticalAngle * y) * -1; // The result is way better with this inversed
+        float HorAngle = (maxHorizontalAngle * x) + defaultHAngle;
+        float vertAngle = ((maxVerticalAngle * y) * -1) + defaultVAngle; // The result is way better with this inversed
 
-        Quaternion toAdd = Quaternion.Euler(new Vector3(vertAngle, 0, HorAngle));
+        Quaternion newDir = Quaternion.Euler(new Vector3(vertAngle, 0, HorAngle));
 
-        cam.transform.rotation = defaultCamDirection * toAdd;
+        cam.transform.rotation = newDir;
+
+        // Vertical angle changes must move camera around player ball
+        vertAngle = 90 - vertAngle; // opposed
+        vertAngle *= Mathf.Deg2Rad;
+
+        float newy = player.transform.position.y + (Mathf.Cos(vertAngle) * distWithPlayer);
+        float newz = player.transform.position.z - (Mathf.Sin(vertAngle) * distWithPlayer);
+
+        Vector3 newpos = new Vector3(cam.transform.position.x, newy, newz);
+
+        cam.transform.position = newpos;
     }
 }
