@@ -47,7 +47,7 @@ public class CamRotator : MonoBehaviour
         float newy = player.transform.position.y + (Mathf.Cos(vertAngle) * distWithPlayer);
         float newz = player.transform.position.z - (Mathf.Sin(vertAngle) * distWithPlayer);
 
-        Vector3 newpos = new Vector3(cam.transform.position.x, newy, newz);
+        Vector3 newpos = new Vector3(player.transform.position.x, newy, newz);
 
         cam.transform.position = newpos;
     }
