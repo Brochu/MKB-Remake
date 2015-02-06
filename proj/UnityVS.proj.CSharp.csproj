@@ -48,6 +48,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PhysicSim.cs" />
     <Compile Include="Assets\Scripts\CamRotator.cs" />
     <Compile Include="Assets\Scripts\FollowCam.cs" />
     <Compile Include="Assets\Scripts\StageRotator.cs" />
