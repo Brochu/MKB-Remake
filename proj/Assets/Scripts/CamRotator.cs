@@ -12,7 +12,7 @@ public class CamRotator : MonoBehaviour
     public float maxVerticalAngle = 10.0f;
     public float defaultVAngle = 5.0f;
 
-    private float distWithPlayer = 0.0f;
+    public float distWithPlayer = 0.0f;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class CamRotator : MonoBehaviour
             this.enabled = false;
         }
 
-        distWithPlayer = (player.transform.position - cam.transform.position).magnitude;
+        //distWithPlayer = (player.transform.position - cam.transform.position).magnitude;
     }
 
     void Update()
