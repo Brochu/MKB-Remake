@@ -11,7 +11,6 @@ public class PhysicSim : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        Debug.Log("PhysicSim started !");
         if (player == null)
         {
             Debug.Log("PhysicSim Script : NO PLAYER FOUND !");
