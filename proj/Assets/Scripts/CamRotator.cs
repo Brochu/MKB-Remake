@@ -48,11 +48,13 @@ public class CamRotator : MonoBehaviour
         // Le mouvement de la camera pour le mouvement
         vertAngle = 90 - vertAngle; // opposed
         vertAngle *= Mathf.Deg2Rad;
+        float camLookRad = camLookRot * Mathf.Deg2Rad;
 
+        float newx = player.transform.position.x + (Mathf.Sin(camLookRad) * distWithPlayer);
         float newy = player.transform.position.y + (Mathf.Cos(vertAngle) * distWithPlayer);
-        float newz = player.transform.position.z - (Mathf.Sin(vertAngle) * distWithPlayer);
+        float newz = player.transform.position.z - (Mathf.Cos(camLookRad) * distWithPlayer);
 
-        Vector3 newpos = new Vector3(player.transform.position.x, newy, newz);
+        Vector3 newpos = new Vector3(newx, newy, newz);
 
         cam.transform.position = newpos;
     }

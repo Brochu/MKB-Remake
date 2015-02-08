@@ -4,6 +4,7 @@ using System.Collections;
 public class PhysicSim : MonoBehaviour {
 
     public GameObject player = null;
+    public Camera cam = null;
     public float maxForce = 10.0f;
 
     private Rigidbody playerBody = null;
@@ -28,9 +29,15 @@ public class PhysicSim : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-        float x = Input.GetAxis("Horizontal1");
-        float z = Input.GetAxis("Vertical1");
-        Vector3 force = new Vector3(x * maxForce, 0, z * maxForce);
+        Vector3 forward = (player.transform.position - cam.transform.position).normalized;
+        forward.y = 0;
+        Vector3 side = Vector3.Cross(forward, Vector3.up);
+        side *= -1;
+
+        float x = Input.GetAxis("Horizontal1") * maxForce;
+        float z = Input.GetAxis("Vertical1") * maxForce;
+
+        Vector3 force = (forward * z) + (side * x);
 
         playerBody.AddForce(force, ForceMode.Acceleration);
     }
