@@ -5,7 +5,7 @@ public class RotatingObject : MonoBehaviour {
 
     public GameObject obj = null;
     public float speed = 0.0f;
-    public float force = 0.0f;
+    public float baseForce = 0.0f;
 
     private Transform objTansform = null;
     private float currentYRot = 0.0f;
@@ -35,7 +35,7 @@ public class RotatingObject : MonoBehaviour {
         Transform bumpee = c.gameObject.transform;
 
         Vector3 dir = (bumpee.position - pachinko.position).normalized;
-        dir *= force;
+        dir *= c.rigidbody.velocity.magnitude * baseForce;
 
         c.rigidbody.AddForce(dir, ForceMode.Impulse);
     }
