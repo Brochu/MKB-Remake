@@ -13,6 +13,8 @@ public class CamRotator : MonoBehaviour
     public float distWithPlayer = 0.0f;
     public float camSpinSpeed = 1.0f;
 
+    public bool invertHorizontal = false;
+
     private float camLookRot = 0.0f;
     //private Vector3 playerLastPos = Vector3.zero;
 
@@ -60,6 +62,6 @@ public class CamRotator : MonoBehaviour
     }
 
     private Vector3 getInputAxisInfo(){
-        return new Vector3(Input.GetAxis("Horizontal1"), Input.GetAxis("Horizontal2"), Input.GetAxis("Vertical1"));
+        return new Vector3(Input.GetAxis("Horizontal1"), (invertHorizontal) ? Input.GetAxis("Horizontal2") : -Input.GetAxis("Horizontal2"), Input.GetAxis("Vertical1"));
     }
 }
