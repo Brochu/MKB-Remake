@@ -4,6 +4,8 @@ using System.Collections;
 public class Banana : MonoBehaviour {
 
     public float spinSpeed = 0.0f;
+    public float xRotation = 0.0f;
+    public float zRotation = 0.0f;
 
     private Transform t = null;
     private float currentYRot = 0.0f;
@@ -15,7 +17,7 @@ public class Banana : MonoBehaviour {
     
     void Update () {
         currentYRot = (currentYRot + spinSpeed) % 360;
-        t.rotation = Quaternion.Euler(0.0f, currentYRot, 0.0f);
+        t.rotation = Quaternion.Euler(xRotation, currentYRot, zRotation);
     }
 
     void OnTriggerEnter(Collider other)
