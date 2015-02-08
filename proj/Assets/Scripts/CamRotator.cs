@@ -8,11 +8,11 @@ public class CamRotator : MonoBehaviour
 
     public float maxHorizontalAngle = 10.0f;
     public float defaultHAngle = 0.0f;
-
     public float maxVerticalAngle = 10.0f;
     public float defaultVAngle = 5.0f;
-
     public float distWithPlayer = 0.0f;
+
+    //private Vector3 playerLastPos = Vector3.zero;
 
     void Start()
     {
@@ -30,8 +30,8 @@ public class CamRotator : MonoBehaviour
     void Update()
     {
         // Calcul de l'angle vertical
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float x = Input.GetAxis("Horizontal1");
+        float y = Input.GetAxis("Vertical1");
 
         float HorAngle = (maxHorizontalAngle * x) + defaultHAngle;
         float vertAngle = ((maxVerticalAngle * y) * -1) + defaultVAngle; // The result is way better with this inversed
@@ -50,5 +50,9 @@ public class CamRotator : MonoBehaviour
         Vector3 newpos = new Vector3(player.transform.position.x, newy, newz);
 
         cam.transform.position = newpos;
+
+        // 2e joystick - pour la camera
+        //float x2 = Input.GetAxis("Horizontal2");
+        //float y2 = Input.GetAxis("Vertical2");
     }
 }

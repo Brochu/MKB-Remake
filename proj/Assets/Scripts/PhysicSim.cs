@@ -28,8 +28,8 @@ public class PhysicSim : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxis("Horizontal1");
+        float z = Input.GetAxis("Vertical1");
         Vector3 force = new Vector3(x * maxForce, 0, z * maxForce);
 
         playerBody.AddForce(force, ForceMode.Acceleration);
