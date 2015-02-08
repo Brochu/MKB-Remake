@@ -33,7 +33,7 @@ public class Banana : MonoBehaviour {
     {
         for (int i = 0; i < 10; i++)
         {
-            t.localScale = t.localScale * 0.7f;
+            t.localScale = t.localScale * 0.6f;
             yield return null;
         }
 
