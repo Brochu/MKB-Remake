@@ -11,7 +11,9 @@ public class CamRotator : MonoBehaviour
     public float maxVerticalAngle = 10.0f;
     public float defaultVAngle = 5.0f;
     public float distWithPlayer = 0.0f;
+    public float camSpinSpeed = 1.0f;
 
+    private float camLookRot = 0.0f;
     //private Vector3 playerLastPos = Vector3.zero;
 
     void Start()
@@ -29,18 +31,21 @@ public class CamRotator : MonoBehaviour
 
     void Update()
     {
-        // Calcul de l'angle vertical
-        float x = Input.GetAxis("Horizontal1");
-        float y = Input.GetAxis("Vertical1");
+        // Obtenir les entrees des joysticks
+        Vector3 entrees = getInputAxisInfo();
 
-        float HorAngle = (maxHorizontalAngle * x) + defaultHAngle;
-        float vertAngle = ((maxVerticalAngle * y) * -1) + defaultVAngle; // The result is way better with this inversed
+        // Calcul des angles pour la camera par rapport aux mouvements
+        float HorAngle = (maxHorizontalAngle * entrees.x) + defaultHAngle;
+        float vertAngle = ((maxVerticalAngle * entrees.z) * -1) + defaultVAngle; // The result is way better with this inversed
 
-        Quaternion newDir = Quaternion.Euler(new Vector3(vertAngle, 0, HorAngle));
+        // Calcul de l'angle pour tourner la camera
+        camLookRot = (camLookRot + entrees.y * camSpinSpeed) % 360;
 
+        // Rotation finale
+        Quaternion newDir = Quaternion.Euler(new Vector3(vertAngle, -camLookRot, HorAngle));
         cam.transform.rotation = newDir;
 
-        // Vertical angle changes must move camera around player ball
+        // Le mouvement de la camera pour le mouvement
         vertAngle = 90 - vertAngle; // opposed
         vertAngle *= Mathf.Deg2Rad;
 
@@ -50,9 +55,9 @@ public class CamRotator : MonoBehaviour
         Vector3 newpos = new Vector3(player.transform.position.x, newy, newz);
 
         cam.transform.position = newpos;
+    }
 
-        // 2e joystick - pour la camera
-        //float x2 = Input.GetAxis("Horizontal2");
-        //float y2 = Input.GetAxis("Vertical2");
+    private Vector3 getInputAxisInfo(){
+        return new Vector3(Input.GetAxis("Horizontal1"), Input.GetAxis("Horizontal2"), Input.GetAxis("Vertical1"));
     }
 }
