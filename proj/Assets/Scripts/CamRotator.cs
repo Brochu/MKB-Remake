@@ -16,7 +16,7 @@ public class CamRotator : MonoBehaviour
     public bool invertHorizontal = false;
 
     private float camLookRot = 0.0f;
-    //private Vector3 playerLastPos = Vector3.zero;
+    private Rigidbody playerBody = null;
 
     void Start()
     {
@@ -28,7 +28,18 @@ public class CamRotator : MonoBehaviour
             this.enabled = false;
         }
 
-        //distWithPlayer = (player.transform.position - cam.transform.position).magnitude;
+        if (player != null)
+        {
+            playerBody = player.rigidbody;
+        }
+
+        if (!playerBody)
+        {
+            Debug.Log("CameraRotator: Il manque un objet de type camera. Stopping script");
+
+            // Desactive
+            this.enabled = false;
+        }
     }
 
     void Update()
@@ -36,15 +47,21 @@ public class CamRotator : MonoBehaviour
         // Obtenir les entrees des joysticks
         Vector3 entrees = getInputAxisInfo();
 
+        // Facteur de vitesse en y
+        float yspeed = -1 * (playerBody.velocity.y) * 7;
+        if (yspeed < 0) yspeed = 0;
+        if (yspeed > 40.0f) yspeed = 40.0f;
+        Debug.Log(yspeed);
+
         // Calcul des angles pour la camera par rapport aux mouvements
-        float HorAngle = (maxHorizontalAngle * entrees.x) + defaultHAngle;
-        float vertAngle = ((maxVerticalAngle * entrees.z) * -1) + defaultVAngle; // The result is way better with this inversed
+        float horAngle = (maxHorizontalAngle * entrees.x) + defaultHAngle;
+        float vertAngle = ((maxVerticalAngle * entrees.z) * -1) + yspeed + defaultVAngle; // The result is way better with this inversed
 
         // Calcul de l'angle pour tourner la camera
         camLookRot = (camLookRot + entrees.y * camSpinSpeed) % 360;
 
         // Rotation finale
-        Quaternion newDir = Quaternion.Euler(new Vector3(vertAngle, -camLookRot, HorAngle));
+        Quaternion newDir = Quaternion.Euler(new Vector3(vertAngle, -camLookRot, horAngle));
         cam.transform.rotation = newDir;
 
         // Le mouvement de la camera pour le mouvement
