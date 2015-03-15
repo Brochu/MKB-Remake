@@ -12,10 +12,9 @@ public class CamRotatorV2 : MonoBehaviour
     public float distWithPlayer = 10.0f;
     public float camSpinSpeed = 5.0f;
 
-    public bool invertHorizontal = false;
-
     private float phi = 0.0f;
     private float theta = 0.0f;
+    private PlayerController playerControls = null;
 
     void Start()
     {
@@ -30,13 +29,20 @@ public class CamRotatorV2 : MonoBehaviour
             Debug.Log("No player found!");
             this.enabled = false;
         }
+
+        playerControls = player.GetComponent<PlayerController>();
+        if (playerControls == null)
+        {
+            Debug.Log("No controls found!");
+            this.enabled = false;
+        }
     }
 
     void Update()
     {
-        float spinInput = (invertHorizontal) ? Input.GetAxis("Horizontal2") : -Input.GetAxis("Horizontal2");
-        float verticalInput = Input.GetAxis("Vertical1");
-        float horizontalInput = Input.GetAxis("Horizontal1");
+        float spinInput = playerControls.getSpinInput();
+        float verticalInput = playerControls.getVerticalInput();
+        float horizontalInput = playerControls.getHorizontalInput();
 
         phi = phi + (spinInput * camSpinSpeed);
         theta = (-1 * defaultVerticalAngle) + (verticalInput * maxVerticalAngle);

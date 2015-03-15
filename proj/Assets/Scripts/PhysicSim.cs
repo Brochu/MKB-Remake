@@ -8,6 +8,7 @@ public class PhysicSim : MonoBehaviour {
     public float maxForce = 10.0f;
 
     private Rigidbody playerBody = null;
+    private PlayerController playerControls = null;
 
     // Use this for initialization
     void Start () {
@@ -19,10 +20,16 @@ public class PhysicSim : MonoBehaviour {
         }
 
         playerBody = player.GetComponent<Rigidbody>();
-
         if (playerBody == null)
         {
             Debug.Log("PhysicSim Script : NO PLAYER RIGID BODY FOUND !");
+            this.enabled = false;
+        }
+
+        playerControls = player.GetComponent<PlayerController>();
+        if (playerControls== null)
+        {
+            Debug.Log("PhysicSim Script : NO CONTROLS RIGID BODY FOUND !");
             this.enabled = false;
         }
     }
@@ -34,8 +41,8 @@ public class PhysicSim : MonoBehaviour {
         Vector3 side = Vector3.Cross(forward, Vector3.up);
         side *= -1;
 
-        float x = Input.GetAxis("Horizontal1") * maxForce;
-        float z = Input.GetAxis("Vertical1") * maxForce;
+        float x = playerControls.getHorizontalInput() * maxForce;
+        float z = playerControls.getVerticalInput() * maxForce;
 
         Vector3 force = (forward * z) + (side * x);
 

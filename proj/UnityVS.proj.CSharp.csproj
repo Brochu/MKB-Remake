@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\CamRotatorV2.cs" />
     <Compile Include="Assets\Scripts\FollowCam.cs" />
     <Compile Include="Assets\Scripts\PhysicSim.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\RotatingObject.cs" />
     <Compile Include="Assets\Scripts\StageRotator.cs" />
   </ItemGroup>
