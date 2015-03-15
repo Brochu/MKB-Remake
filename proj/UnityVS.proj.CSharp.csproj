@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Banana.cs" />
     <Compile Include="Assets\Scripts\CamRotator.cs" />
+    <Compile Include="Assets\Scripts\CamRotatorV2.cs" />
     <Compile Include="Assets\Scripts\FollowCam.cs" />
     <Compile Include="Assets\Scripts\PhysicSim.cs" />
     <Compile Include="Assets\Scripts\RotatingObject.cs" />
