@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
 
     public bool invertHorizontal = false;
     public bool useKeyboardControls = false;
+    public bool ignoreInputs = false;
+
     // Use this for initialization
     void Start () {
     
@@ -17,11 +19,15 @@ public class PlayerController : MonoBehaviour {
 
     public float getSpinInput()
     {
+        if (ignoreInputs) return 0;
+
         return (invertHorizontal) ? Input.GetAxis("Horizontal2") : -Input.GetAxis("Horizontal2");
     }
 
     public float getVerticalInput()
     {
+        if (ignoreInputs) return 0;
+
         if (useKeyboardControls)
             return Input.GetAxis("Vertical");
         else
@@ -30,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 
     public float getHorizontalInput()
     {
+        if (ignoreInputs) return 0;
+
         if (useKeyboardControls)
             return Input.GetAxis("Horizontal");
         else
