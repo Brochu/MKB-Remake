@@ -29,7 +29,7 @@ public class PhysicSim : MonoBehaviour {
         playerControls = player.GetComponent<PlayerController>();
         if (playerControls== null)
         {
-            Debug.Log("PhysicSim Script : NO CONTROLS RIGID BODY FOUND !");
+            Debug.Log("PhysicSim Script : NO CONTROLS FOUND !");
             this.enabled = false;
         }
     }

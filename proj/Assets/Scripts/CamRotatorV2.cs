@@ -8,8 +8,8 @@ public class CamRotatorV2 : MonoBehaviour
 
     public float maxHorizontalAngle = 10.0f;
     public float maxVerticalAngle = 10.0f;
-    public float defaultVerticalAngle = 10.0f;
-    public float distWithPlayer = 10.0f;
+    public float defaultVerticalAngle = 20.0f;
+    public float distWithPlayer = 5.5f;
     public float camSpinSpeed = 5.0f;
 
     private float phi = 0.0f;
