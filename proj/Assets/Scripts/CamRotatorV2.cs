@@ -23,13 +23,11 @@ public class CamRotatorV2 : MonoBehaviour
             Debug.Log("No camera found!");
             this.enabled = false;
         }
-
         if (!player)
         {
             Debug.Log("No player found!");
             this.enabled = false;
         }
-
         playerControls = player.GetComponent<PlayerController>();
         if (playerControls == null)
         {
