@@ -55,7 +55,6 @@ public class CamRotatorV2 : MonoBehaviour
         newz = distWithPlayer * Mathf.Cos(phi * Mathf.Deg2Rad) * Mathf.Cos(theta * Mathf.Deg2Rad);
 
         newPos += new Vector3((-1 * newx), (-1 * newy), (-1 * newz));
-
         cam.transform.position = newPos;
         cam.transform.rotation = Quaternion.Euler(new Vector3((-1 * theta), phi, (horizontalInput * maxHorizontalAngle)));
     }
