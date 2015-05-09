@@ -36,16 +36,20 @@ public class PhysicSim : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-        Vector3 forward = (player.transform.position - cam.transform.position).normalized;
+        Vector3 forward = (player.transform.position - cam.transform.position);
         forward.y = 0;
+        forward = forward.normalized;
+
         Vector3 side = Vector3.Cross(forward, Vector3.up);
-        side *= -1;
+        side.y = 0;
+        side = side.normalized;
 
         float x = playerControls.getHorizontalInput() * maxForce;
         float z = playerControls.getVerticalInput() * maxForce;
 
-        Vector3 force = (forward * z) + (side * x);
+        Vector3 force = (forward * z) + (side * x * -1);
 
-        playerBody.AddForce(force, ForceMode.Acceleration);
+        if (force != Vector3.zero)
+            playerBody.AddForce(force, ForceMode.Acceleration);
     }
 }
