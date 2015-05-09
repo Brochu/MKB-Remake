@@ -30,7 +30,7 @@ public class CamRotator : MonoBehaviour
 
         if (player != null)
         {
-            playerBody = player.rigidbody;
+            playerBody = player.GetComponent<Rigidbody>();
         }
 
         if (!playerBody)
