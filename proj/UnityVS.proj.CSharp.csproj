@@ -54,6 +54,7 @@
     <Compile Include="Assets\Scripts\Banana.cs" />
     <Compile Include="Assets\Scripts\CamRotatorV2.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\IntroCutsceneController.cs" />
     <Compile Include="Assets\Scripts\PhysicSim.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\RotatingObject.cs" />
