@@ -44,11 +44,16 @@ public class IntroCutsceneController : MonoBehaviour {
     public void animationDone(float time)
     {
         // End of the intro cutscene giving control to player
+        playerPhysics.useGravity = true;
+        StartCoroutine(givePlayerControls());
+    }
 
+    IEnumerator givePlayerControls()
+    {
+        yield return new WaitForSeconds(1);
         introCam.enabled = false;
         playerCam.enabled = true;
         
         player.ignoreInputs = false;
-        playerPhysics.useGravity = true;
     }
 }
