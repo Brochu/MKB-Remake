@@ -7,6 +7,7 @@ public class IntroCutsceneController : MonoBehaviour {
     public Camera introCam = null;
 
     PlayerController player = null;
+    Rigidbody playerPhysics = null;
 
     // Use this for initialization
     void Start () {
@@ -18,24 +19,36 @@ public class IntroCutsceneController : MonoBehaviour {
             return;
         }
         player = playerObj.GetComponent<PlayerController>();
+        playerPhysics = playerObj.GetComponent<Rigidbody>();
 
-        if (player == null)
+        if (player == null || playerPhysics == null)
         {
             Debug.Log("No player controller object found ... disabling CutsceneController");
             this.enabled = false;
             return;
         }
 
-        Debug.Log("Start of the cutscene intro");
-
         // Switch to the cutscene camera and disable inputs
         introCam.enabled = true;
         playerCam.enabled = false;
+
         player.ignoreInputs = true;
+        playerPhysics.useGravity = false;
     }
     
     // Update is called once per frame
     void Update () {
     
+    }
+
+    public void animationDone(float time)
+    {
+        // End of the intro cutscene giving control to player
+
+        introCam.enabled = false;
+        playerCam.enabled = true;
+        
+        player.ignoreInputs = false;
+        playerPhysics.useGravity = true;
     }
 }

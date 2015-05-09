@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 
     public float getVerticalInput()
     {
+        //TODO: Add validation with float.approximately to remove value explosion
         if (ignoreInputs) return 0;
 
         if (useKeyboardControls)
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour {
 
     public float getHorizontalInput()
     {
+        //TODO: Add validation with float.approximately to remove value explosion
         if (ignoreInputs) return 0;
 
         if (useKeyboardControls)
