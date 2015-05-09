@@ -26,23 +26,31 @@ public class PlayerController : MonoBehaviour {
 
     public float getVerticalInput()
     {
-        //TODO: Add validation with float.approximately to remove value explosion
         if (ignoreInputs) return 0;
 
         if (useKeyboardControls)
+        {
             return Input.GetAxis("Vertical");
+        }
         else
-            return Input.GetAxis("Vertical1");
+        {
+            float moveVal = Input.GetAxis("Vertical1");
+            return (Mathf.Approximately(moveVal, 0)) ? 0 : moveVal;
+        }
     }
 
     public float getHorizontalInput()
     {
-        //TODO: Add validation with float.approximately to remove value explosion
         if (ignoreInputs) return 0;
 
         if (useKeyboardControls)
+        {
             return Input.GetAxis("Horizontal");
+        }
         else
-            return Input.GetAxis("Horizontal1");
+        {
+            float moveVal = Input.GetAxis("Horizontal1");
+            return (Mathf.Approximately(moveVal, 0)) ? 0 : moveVal;
+        }
     }
 }
