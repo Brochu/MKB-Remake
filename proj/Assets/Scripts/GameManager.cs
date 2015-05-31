@@ -9,18 +9,25 @@ public class GameManager : MonoBehaviour {
     public Camera playerCam = null;
     public Camera introCam = null;
 
-    public float time = 0.0f;
-    public int bananaCount = 0;
+    public float startTime = 0.0f;
     public Text timeTxt = null;
-    public Text bananaTxt = null;
+    public Text pickupTxt = null;
 
     private IntroCutsceneController introController = null;
     private PlayerController player = null;
     private Rigidbody playerPhysics = null;
 
     private string timeStr = "Time : ";
-    private string bananaStr = "Ohhhh Banana : ";
-    private int maxBananaCount = 100;
+    private string pickupStr = "Ohhhh Banana : ";
+    private int maxPickupCount = 100;
+
+    public class GameStats
+    {
+        public float time = 0.0f;
+        public int pickupCount = 0;
+        public int score = 0;
+    }
+    public GameStats currentStats;
 
     // Use this for initialization
     void Start () {
@@ -42,10 +49,17 @@ public class GameManager : MonoBehaviour {
         }
 
         introController = introCam.GetComponent<IntroCutsceneController>();
-        introController.IntroDone += startStage;
+        introController.IntroDone += onIntroDone;
+
+        Pickupable.OnPickup += onPickup;
 
         Debug.Log("Stage is started");
+        currentStats = new GameStats();
+        currentStats.time = startTime;
+
         startCutscene();
+        updateTime();
+        updatePickupCount();
     }
     
     // Update is called once per frame
@@ -54,17 +68,25 @@ public class GameManager : MonoBehaviour {
 
     void OnDestroy()
     {
-        introController.IntroDone -= startStage;
+        introController.IntroDone -= onIntroDone;
+        Pickupable.OnPickup -= onPickup;
     }
 
     public void updateTime()
     {
-        timeTxt.text = timeStr + string.Format("{0:f1}", time);
+        timeTxt.text = timeStr + string.Format("{0:f1}", currentStats.time);
     }
 
-    public void updateBananaCount()
+    public void updatePickupCount()
     {
-        bananaTxt.text = bananaStr + bananaCount.ToString();
+        // Check for maxPickupCount
+        if (currentStats.pickupCount >= maxPickupCount)
+        {
+            currentStats.pickupCount = 0;
+            // Maybe do something special ??
+        }
+
+        pickupTxt.text = pickupStr + currentStats.pickupCount.ToString();
     }
 
     private void startCutscene()
@@ -77,13 +99,7 @@ public class GameManager : MonoBehaviour {
         playerPhysics.useGravity = false;
     }
 
-    private void addBanana()
-    {
-        bananaCount = (bananaCount + 1) % maxBananaCount;
-        updateBananaCount();
-    }
-
-    private void startStage()
+    private void onIntroDone()
     {
         playerPhysics.useGravity = true;
         StartCoroutine(givePlayerControls());
@@ -97,6 +113,7 @@ public class GameManager : MonoBehaviour {
         
         player.ignoreInputs = false;
 
+        // Find a way to clean this up
         StartCoroutine(stageStartTimer());
     }
 
@@ -113,16 +130,23 @@ public class GameManager : MonoBehaviour {
         Debug.Log("GO !");
         */
 
-        while (time >= 0)
+        while (currentStats.time >= 0)
         {
             updateTime();
             yield return new WaitForSeconds(0.1f);
-            time -= 0.1f;
+            currentStats.time -= 0.1f;
         }
 
         // TODO: add event to signal stage failed
         Debug.Log("Time over !");
-        player.ignoreInputs = true;
         playerPhysics.Sleep();
+        playerCam.GetComponent<CamRotatorV2>().enabled = false;
+        player.ignoreInputs = true;
+    }
+
+    private void onPickup(Pickupable item)
+    {
+        currentStats = item.addToStats(currentStats);
+        updatePickupCount();
     }
 }

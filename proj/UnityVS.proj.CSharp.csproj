@@ -49,9 +49,6 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Banana.cs" />
@@ -59,6 +56,9 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\IntroCutsceneController.cs" />
     <Compile Include="Assets\Scripts\PhysicSim.cs" />
+    <Compile Include="Assets\Scripts\Pickupables\Coin.cs" />
+    <Compile Include="Assets\Scripts\Pickupables\CoinBag.cs" />
+    <Compile Include="Assets\Scripts\Pickupables\Pickupable.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\RotatingObject.cs" />
     <Compile Include="Assets\Scripts\unused\CamRotator.cs" />
