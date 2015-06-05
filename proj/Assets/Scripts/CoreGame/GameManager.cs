@@ -16,9 +16,10 @@ public class GameManager : MonoBehaviour {
 
     public class GameStats
     {
+        public int lives = 5;
         public float time = 0.0f;
-        public int pickupCount = 0;
         public int score = 0;
+        public int pickupCount = 0;
         public int maxPickupCount = 100;
     }
     public GameStats currentStats;
@@ -48,7 +49,6 @@ public class GameManager : MonoBehaviour {
 
         Pickupable.OnPickup += onPickup;
 
-        Debug.Log("Stage is started");
         currentStats = new GameStats();
         currentStats.time = startTime;
 
@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour {
         }
 
         // TODO: add event to signal stage failed
-        Debug.Log("Time over !");
         playerPhysics.Sleep();
         playerCam.GetComponent<CamRotatorV2>().enabled = false;
         player.ignoreInputs = true;
