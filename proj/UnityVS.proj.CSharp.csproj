@@ -51,18 +51,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Banana.cs" />
-    <Compile Include="Assets\Scripts\CamRotatorV2.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\IntroCutsceneController.cs" />
-    <Compile Include="Assets\Scripts\PhysicSim.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\GameManager.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\GameUIUpdater.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\IntroCutsceneController.cs" />
     <Compile Include="Assets\Scripts\Pickupables\Coin.cs" />
     <Compile Include="Assets\Scripts\Pickupables\CoinBag.cs" />
     <Compile Include="Assets\Scripts\Pickupables\Pickupable.cs" />
-    <Compile Include="Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\RotatingObject.cs" />
+    <Compile Include="Assets\Scripts\Player\CamRotatorV2.cs" />
+    <Compile Include="Assets\Scripts\Player\PhysicSim.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\unused\Banana.cs" />
     <Compile Include="Assets\Scripts\unused\CamRotator.cs" />
     <Compile Include="Assets\Scripts\unused\FollowCam.cs" />
+    <Compile Include="Assets\Scripts\unused\RotatingObject.cs" />
     <Compile Include="Assets\Scripts\unused\StageRotator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

@@ -8,26 +8,21 @@ public class GameManager : MonoBehaviour {
     public GameObject playerObj = null;
     public Camera playerCam = null;
     public Camera introCam = null;
-
     public float startTime = 0.0f;
-    public Text timeTxt = null;
-    public Text pickupTxt = null;
 
     private IntroCutsceneController introController = null;
     private PlayerController player = null;
     private Rigidbody playerPhysics = null;
-
-    private string timeStr = "Time : ";
-    private string pickupStr = "Ohhhh Banana : ";
-    private int maxPickupCount = 100;
 
     public class GameStats
     {
         public float time = 0.0f;
         public int pickupCount = 0;
         public int score = 0;
+        public int maxPickupCount = 100;
     }
     public GameStats currentStats;
+    public static event Action<GameStats> onUpdateUI;
 
     // Use this for initialization
     void Start () {
@@ -58,8 +53,7 @@ public class GameManager : MonoBehaviour {
         currentStats.time = startTime;
 
         startCutscene();
-        updateTime();
-        updatePickupCount();
+        onUpdateUI(currentStats);
     }
     
     // Update is called once per frame
@@ -70,23 +64,6 @@ public class GameManager : MonoBehaviour {
     {
         introController.IntroDone -= onIntroDone;
         Pickupable.OnPickup -= onPickup;
-    }
-
-    public void updateTime()
-    {
-        timeTxt.text = timeStr + string.Format("{0:f1}", currentStats.time);
-    }
-
-    public void updatePickupCount()
-    {
-        // Check for maxPickupCount
-        if (currentStats.pickupCount >= maxPickupCount)
-        {
-            currentStats.pickupCount = 0;
-            // Maybe do something special ??
-        }
-
-        pickupTxt.text = pickupStr + currentStats.pickupCount.ToString();
     }
 
     private void startCutscene()
@@ -103,38 +80,25 @@ public class GameManager : MonoBehaviour {
     {
         playerPhysics.useGravity = true;
         StartCoroutine(givePlayerControls());
+        StartCoroutine(stageStartTimer());
     }
 
-    IEnumerator givePlayerControls()
+    private IEnumerator givePlayerControls()
     {
         yield return new WaitForSeconds(1);
         introCam.enabled = false;
         playerCam.enabled = true;
         
         player.ignoreInputs = false;
-
-        // Find a way to clean this up
-        StartCoroutine(stageStartTimer());
     }
 
-    IEnumerator stageStartTimer()
+    private IEnumerator stageStartTimer()
     {
-        /*
-        updateTime();
-        Debug.Log("Starting countdown in ...");
-        for (int i = 5; i > 0; i--)
-        {
-            Debug.Log(i);
-            yield return new WaitForSeconds(1.0f);
-        }
-        Debug.Log("GO !");
-        */
-
         while (currentStats.time >= 0)
         {
-            updateTime();
             yield return new WaitForSeconds(0.1f);
             currentStats.time -= 0.1f;
+            onUpdateUI(currentStats);
         }
 
         // TODO: add event to signal stage failed
@@ -147,6 +111,6 @@ public class GameManager : MonoBehaviour {
     private void onPickup(Pickupable item)
     {
         currentStats = item.addToStats(currentStats);
-        updatePickupCount();
+        onUpdateUI(currentStats);
     }
 }
