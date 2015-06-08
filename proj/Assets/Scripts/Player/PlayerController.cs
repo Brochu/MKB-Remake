@@ -9,12 +9,17 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-    
+        GameManager.onTimeOver += onTimeOver;
     }
     
     // Update is called once per frame
     void Update () {
     
+    }
+
+    void OnDestroy()
+    {
+        GameManager.onTimeOver -= onTimeOver;
     }
 
     public float getSpinInput()
@@ -52,5 +57,10 @@ public class PlayerController : MonoBehaviour {
             float moveVal = Input.GetAxis("Horizontal1");
             return (Mathf.Approximately(moveVal, 0)) ? 0 : moveVal;
         }
+    }
+
+    private void onTimeOver()
+    {
+        this.ignoreInputs = true;
     }
 }

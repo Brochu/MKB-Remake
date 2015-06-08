@@ -32,6 +32,8 @@ public class PhysicSim : MonoBehaviour {
             Debug.Log("PhysicSim Script : NO CONTROLS FOUND !");
             this.enabled = false;
         }
+
+        GameManager.onTimeOver += onTimeOver;
     }
     
     // Update is called once per frame
@@ -51,5 +53,15 @@ public class PhysicSim : MonoBehaviour {
 
         if (force != Vector3.zero)
             playerBody.AddForce(force, ForceMode.Acceleration);
+    }
+
+    void OnDestroy()
+    {
+        GameManager.onTimeOver -= onTimeOver;
+    }
+
+    void onTimeOver()
+    {
+        gameObject.GetComponent<Rigidbody>().Sleep();
     }
 }

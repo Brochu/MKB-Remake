@@ -5,14 +5,7 @@ using System;
 
 public class GameManager : MonoBehaviour {
 
-    public GameObject playerObj = null;
-    public Camera playerCam = null;
-    public Camera introCam = null;
     public float startTime = 0.0f;
-
-    private IntroCutsceneController introController = null;
-    private PlayerController player = null;
-    private Rigidbody playerPhysics = null;
 
     public class GameStats
     {
@@ -24,72 +17,37 @@ public class GameManager : MonoBehaviour {
     }
     public GameStats currentStats;
     public static event Action<GameStats> onUpdateUI;
+    public static event Action onTimeOver;
 
     // Use this for initialization
     void Start () {
-        // Get player controller object
-        if (playerObj == null)
-        {
-            Debug.Log("No player object given ... disabling CutsceneController");
-            this.enabled = false;
-            return;
-        }
-        player = playerObj.GetComponent<PlayerController>();
-        playerPhysics = playerObj.GetComponent<Rigidbody>();
-
-        if (player == null || playerPhysics == null)
-        {
-            Debug.Log("No player controller object found ... disabling CutsceneController");
-            this.enabled = false;
-            return;
-        }
-
-        introController = introCam.GetComponent<IntroCutsceneController>();
-        introController.IntroDone += onIntroDone;
-
+        IntroCutsceneController.onStartTimer += onStartTimer;
         Pickupable.OnPickup += onPickup;
 
         currentStats = new GameStats();
         currentStats.time = startTime;
 
-        startCutscene();
-        onUpdateUI(currentStats);
+        updateUI();
     }
-    
+
     // Update is called once per frame
     void Update () {
     }
 
     void OnDestroy()
     {
-        introController.IntroDone -= onIntroDone;
         Pickupable.OnPickup -= onPickup;
     }
-
-    private void startCutscene()
+    
+    private void onStartTimer()
     {
-        // Switch to the cutscene camera and disable inputs
-        introCam.enabled = true;
-        playerCam.enabled = false;
-
-        player.ignoreInputs = true;
-        playerPhysics.useGravity = false;
-    }
-
-    private void onIntroDone()
-    {
-        playerPhysics.useGravity = true;
-        StartCoroutine(givePlayerControls());
         StartCoroutine(stageStartTimer());
     }
 
-    private IEnumerator givePlayerControls()
+    private void updateUI()
     {
-        yield return new WaitForSeconds(1);
-        introCam.enabled = false;
-        playerCam.enabled = true;
-        
-        player.ignoreInputs = false;
+        if (onUpdateUI != null)
+            onUpdateUI(currentStats);
     }
 
     private IEnumerator stageStartTimer()
@@ -98,18 +56,16 @@ public class GameManager : MonoBehaviour {
         {
             yield return new WaitForSeconds(0.1f);
             currentStats.time -= 0.1f;
-            onUpdateUI(currentStats);
+            updateUI();
         }
 
         // TODO: add event to signal stage failed
-        playerPhysics.Sleep();
-        playerCam.GetComponent<CamRotatorV2>().enabled = false;
-        player.ignoreInputs = true;
+        onTimeOver();
     }
 
     private void onPickup(Pickupable item)
     {
         currentStats = item.addToStats(currentStats);
-        onUpdateUI(currentStats);
+        updateUI();
     }
 }

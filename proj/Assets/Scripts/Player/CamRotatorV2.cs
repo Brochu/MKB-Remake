@@ -34,6 +34,8 @@ public class CamRotatorV2 : MonoBehaviour
             Debug.Log("No controls found!");
             this.enabled = false;
         }
+
+        GameManager.onTimeOver += onTimeOver;
     }
 
     void Update()
@@ -57,5 +59,15 @@ public class CamRotatorV2 : MonoBehaviour
         newPos += new Vector3((-1 * newx), (-1 * newy), (-1 * newz));
         cam.transform.position = newPos;
         cam.transform.rotation = Quaternion.Euler(new Vector3((-1 * theta), phi, (horizontalInput * maxHorizontalAngle)));
+    }
+
+    void OnDestroy()
+    {
+        GameManager.onTimeOver -= onTimeOver;
+    }
+
+    private void onTimeOver()
+    {
+        this.enabled = false;
     }
 }
