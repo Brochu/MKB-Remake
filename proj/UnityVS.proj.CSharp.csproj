@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\Pickupables\Pickupable.cs" />
     <Compile Include="Assets\Scripts\Player\CamRotatorV2.cs" />
     <Compile Include="Assets\Scripts\Player\PhysicSim.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\unused\Banana.cs" />
     <Compile Include="Assets\Scripts\unused\CamRotator.cs" />

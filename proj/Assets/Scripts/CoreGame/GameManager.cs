@@ -20,6 +20,12 @@ public class GameManager : MonoBehaviour {
     public static event Action<GameStats> onUpdateUI;
     public static event Action onTimeOver;
 
+    // add this to system to handle more than one player
+    /*
+    private int numberOfPlayer = 1;
+    private int currentPlayerId = 0;
+    */
+
     // Use this for initialization
     void Start () {
         GameUIUpdater.onUILoaded += onUILoaded;
