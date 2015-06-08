@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour {
     // add this to system to handle more than one player
     /*
     private int numberOfPlayer = 1;
+    private List<Player> players;
     private int currentPlayerId = 0;
     */
 
