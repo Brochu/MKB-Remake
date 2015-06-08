@@ -5,7 +5,7 @@ using System;
 
 public class GameManager : MonoBehaviour {
 
-    public float startTime = 0.0f;
+    public float startTime = 60.0f;
 
     public class GameStats
     {
@@ -16,11 +16,13 @@ public class GameManager : MonoBehaviour {
         public int maxPickupCount = 100;
     }
     public GameStats currentStats;
+    public static event Action onInitDone;
     public static event Action<GameStats> onUpdateUI;
     public static event Action onTimeOver;
 
     // Use this for initialization
     void Start () {
+        GameUIUpdater.onUILoaded += onUILoaded;
         IntroCutsceneController.onStartTimer += onStartTimer;
         Pickupable.OnPickup += onPickup;
 
@@ -28,6 +30,9 @@ public class GameManager : MonoBehaviour {
         currentStats.time = startTime;
 
         updateUI();
+
+        DontDestroyOnLoad(this);
+        onInitDone();
     }
 
     // Update is called once per frame
@@ -36,9 +41,16 @@ public class GameManager : MonoBehaviour {
 
     void OnDestroy()
     {
+        GameUIUpdater.onUILoaded -= onUILoaded;
+        IntroCutsceneController.onStartTimer -= onStartTimer;
         Pickupable.OnPickup -= onPickup;
     }
-    
+
+    private void onUILoaded()
+    {
+        updateUI();
+    }
+
     private void onStartTimer()
     {
         StartCoroutine(stageStartTimer());

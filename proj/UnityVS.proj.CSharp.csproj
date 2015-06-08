@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CoreGame\GameManager.cs" />
     <Compile Include="Assets\Scripts\CoreGame\GameUIUpdater.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\InitScript.cs" />
     <Compile Include="Assets\Scripts\CoreGame\IntroCutsceneController.cs" />
     <Compile Include="Assets\Scripts\Pickupables\Coin.cs" />
     <Compile Include="Assets\Scripts\Pickupables\CoinBag.cs" />

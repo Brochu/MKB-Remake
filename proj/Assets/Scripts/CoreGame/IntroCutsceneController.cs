@@ -48,7 +48,6 @@ public class IntroCutsceneController : MonoBehaviour {
 
     private void startCutscene()
     {
-        // Switch to the cutscene camera and disable inputs
         playerCam.enabled = false;
         introCam.enabled = true;
 

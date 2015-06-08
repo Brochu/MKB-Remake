@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 
 public class GameUIUpdater : MonoBehaviour {
+
+    public static event Action onUILoaded;
 
     public Text timeTxt = null;
     public Text pickupTxt = null;
@@ -13,6 +16,7 @@ public class GameUIUpdater : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GameManager.onUpdateUI += updateUI;
+        onUILoaded();
     }
     
     void OnDestroy()
