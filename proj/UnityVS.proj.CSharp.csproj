@@ -55,8 +55,7 @@
     <Compile Include="Assets\Scripts\CoreGame\GameUIUpdater.cs" />
     <Compile Include="Assets\Scripts\CoreGame\InitScript.cs" />
     <Compile Include="Assets\Scripts\CoreGame\IntroCutsceneController.cs" />
-    <Compile Include="Assets\Scripts\Pickupables\Coin.cs" />
-    <Compile Include="Assets\Scripts\Pickupables\CoinBag.cs" />
+    <Compile Include="Assets\Scripts\Pickupables\AddToStatsPickup.cs" />
     <Compile Include="Assets\Scripts\Pickupables\Pickupable.cs" />
     <Compile Include="Assets\Scripts\Player\CamRotatorV2.cs" />
     <Compile Include="Assets\Scripts\Player\PhysicSim.cs" />

@@ -11,7 +11,7 @@ public class GameUIUpdater : MonoBehaviour {
     public Text pickupTxt = null;
 
     private string timeStr = "Time : ";
-    private string pickupStr = "Ohhhh Banana : ";
+    private string pickupStr = "Coins : ";
 
     // Use this for initialization
     void Start () {
