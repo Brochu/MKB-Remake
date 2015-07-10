@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour {
         }
 
         // TODO: add event to signal stage failed
+        // TODO: pourquoi ce commentaire est encore la ??!
         onTimeOver();
     }
 
